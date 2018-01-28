@@ -1,0 +1,11 @@
+server:
+  port: 7002
+spring:
+  application:
+    name: mservice-order
+eureka:
+  client:
+    registerWithEureka: true  #默认是true，是否在注册中心注册
+    fetchRegistry: false
+#    serviceUrl: 
+#      defautlZone: http://localhost:8761/eureka #默认就是这个

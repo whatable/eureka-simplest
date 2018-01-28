@@ -1,0 +1,18 @@
+server:
+  port: 8761 
+
+spring:
+  application:
+    name: mserver
+
+eureka:
+  instance:
+    hostname: localhost
+    lease-expiration-duration-in-seconds: 15
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+logging:
+  level:
+    com.netflix.discovery: 'OFF'
+    org.springframework.cloud: 'DEBUG'

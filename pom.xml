@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 本pom轻量化，并不继承start-parent，而是由各个子pom按需自行引入依赖 -->
+	<!-- 各个子pom要引入的cloud相关依赖，其全都间接依赖了starter-parent中的依赖，所以这里不必继承了 -->
+	<!-- 同时，dependencyManagement中import了依赖BOM：spring-cloud-dependencies，预先确定了各依赖的版本 -->
+	<!-- 所以各个子pom引入依赖时也不需要声明版本了 -->
+	<!-- 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.9.RELEASE</version>
+		<relativePath />
+	</parent>
+	-->
+
+	<groupId>rx</groupId>
+	<artifactId>eureka-simplest</artifactId>
+	<version>1.0</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<modules>
+		<module>server</module>
+		<module>client</module>
+	</modules>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- 这个 import的dependencyManagement，是管理了一个依赖BOM： spring-cloud-dependencies -->
+			<!-- import相当于把依赖“组合”进来而不是继承，这个pom仍然有机会继承其他更需要继承的父pom， -->
+			<!-- 同时，这个pom还可以import更多类似的dependencyManagement，这是继承做不到的（不支持多继承） -->
+			<!-- 当然dependencyManagement只是定义了依赖而没有真的依赖，具体仍然需要写明依赖，但不需要声明版本  -->
+			<!-- 本pom作为整个项目的顶级父pom，没有引入任何具体依赖  -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Edgware.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.5.9.RELEASE</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
